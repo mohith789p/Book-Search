@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(125deg, #000, #15a, #17a, #15a, #000);
+        margin: 0;
+        font-size: 0.875rem;
+        color: #fff;
+      }
+      form {
+        background: #105;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        width: 20rem;
+      }
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 2.5rem;
+        text-align: center;
+        color: #24a;
+      }
+      input {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        margin: 2rem 0;
+        border: 1px solid rgb(5, 5, 62);
+        border-radius: 15px;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+        background-color: #17a;
+        font-size: 1.25rem;
+        color: #aaa;
+      }
+      input:focus {
+        border-color: rgb(5, 5, 62);
+        outline: none;
+      }
+      input::placeholder {
+        font-size: 1rem;
+        color: #ccc;
+        margin: 0;
+      }
+      button {
+        width: 100%;
+        padding: 1rem;
+        background-color: #24a;
+        color: white;
+        border: none;
+        border-radius: 20px 30px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s;
+      }
+      button:hover {
+        background-color: #119;
+      }
+      #register {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+      p {
+        margin: 0;
+        font-size: 1rem;
+        align-self: center;
+      }
+      a {
+        color: #1fd;
+        text-decoration: none;
+        font-size: 1rem;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <h1>LOG IN</h1>
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <div id="register">
+        <p>Don't have an account?</p>
+        <a href="/signup">Register here</a>
+      </div>
+    </form>
+    <script>
+      async function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const emailSplit = email.split("@");
+        const username = emailSplit[0];
+        const loginData = {
+          username: username,
+          password: password,
+        };
+        try {
+          const response = await fetch("/login", {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(loginData),
+          });
+          if (response.ok) {
+            const id = username;
+            window.location.href = `/dashboard/${id}`;
+          } else {
+            const errorData = await response.json();
+            alert("Error: " + errorData.message);
+          }
+        } catch (e) {
+          console.error("Error during login:", e);
+          alert("Login failed. Please try again.");
+        }
+      }
+    </script>
+  </body>
+</html>
