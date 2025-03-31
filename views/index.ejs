@@ -16,7 +16,10 @@
         font-family: "Poppins", sans-serif;
       }
       body {
-        background: radial-gradient(circle, #000, #15a, #17a, #15a, #000);
+        background: radial-gradient(circle, #105, #109, #000);
+        height: 100vh;
+        background-size: cover;
+        background-position: center center;
         padding: 20px;
       }
       .search-container {
@@ -35,14 +38,14 @@
       button {
         padding: 10px 15px;
         font-size: 16px;
-        background: #ff7f50;
+        background: #24a;
         color: white;
         border: none;
         border-radius: 5px;
         cursor: pointer;
       }
       button:hover {
-        background: #ff5722;
+        background: #119;
       }
       .books-container {
         display: flex;
@@ -97,7 +100,6 @@
         position: absolute;
         top: 20px;
         right: 20px;
-        background: red;
         color: white;
         padding: 10px;
         border: none;
@@ -148,7 +150,7 @@
                   <img src="${
                     info.imageLinks
                       ? info.imageLinks.thumbnail
-                      : "https://via.placeholder.com/150"
+                      : "https://th.bing.com/th/id/OIP.MBSOX085k67CAzrk7EpycAHaHk?pid=ImgDet&w=195&h=199&c=7&dpr=1.4"
                   }" alt="Book Cover" />
                 </div>
               `;
@@ -176,7 +178,7 @@
         }`;
         document.getElementById("fullImage").src = book.imageLinks
           ? book.imageLinks.thumbnail
-          : "https://via.placeholder.com/150";
+          : "https://th.bing.com/th/id/OIP.MBSOX085k67CAzrk7EpycAHaHk?pid=ImgDet&w=195&h=199&c=7&dpr=1.4";
         document.getElementById("fullDescription").innerText =
           book.description || "No description available.";
         document.getElementById("fullScreen").style.display = "flex";
