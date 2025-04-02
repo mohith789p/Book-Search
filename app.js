@@ -13,7 +13,8 @@ const PORT = 3000;
 const db = getFirestore();
 
 app.use(bodyParser.json());
-app.use(express.static("/public"));
+app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/assets"));
 
 app.set("view engine", "ejs");
 

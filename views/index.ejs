@@ -113,8 +113,24 @@
       <input type="text" id="searchInput" placeholder="Enter book title..." />
       <button onclick="searchBooks()">Search</button>
     </div>
-    <div class="books-container" id="booksContainer">
-      <p>Search for a book to see results here.</p>
+    <div
+      class="books-container"
+      id="booksContainer"
+      style="position: relative; height: 100vh"
+    >
+      <p
+        style="
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: white;
+          font-size: 24px;
+          text-align: center;
+        "
+      >
+        Search for a book to see results here.
+      </p>
     </div>
     <div id="fullScreen" class="full-screen" style="display: none">
       <button class="close-btn" onclick="closeFullScreen()">Close</button>
