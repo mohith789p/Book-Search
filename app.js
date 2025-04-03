@@ -3,6 +3,7 @@ const express = require("express");
 const admin = require("firebase-admin");
 const bodyParser = require("body-parser");
 const { getFirestore } = require("firebase-admin/firestore");
+const path = require("path");
 
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -19,17 +20,23 @@ const db = getFirestore();
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.get("/dashboard/:username", async (req, res) => {
   const username = req.params.username;
-  const userRef = db.collection("users").doc(username);
-  const doc = await userRef.get();
-  if (!doc.exists) {
-    return res.status(401).send({ message: "Invalid email or password." });
+  try {
+    const userRef = db.collection("users").doc(username);
+    const doc = await userRef.get();
+    if (!doc.exists) {
+      return res.status(401).send({ message: "User not found." });
+    }
+    const userData = doc.data();
+    res.render("index", { result: userData });
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).send({ message: "Internal server error." });
   }
-  const userData = doc.data();
-  res.render("index", { result: userData });
 });
 
 app.get("/", function (req, res) {
