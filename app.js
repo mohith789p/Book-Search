@@ -1,15 +1,19 @@
+require("dotenv").config();
 const express = require("express");
 const admin = require("firebase-admin");
 const bodyParser = require("body-parser");
-const services = require("./key.json");
 const { getFirestore } = require("firebase-admin/firestore");
 
 admin.initializeApp({
-  credential: admin.credential.cert(services),
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+  }),
 });
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const db = getFirestore();
 
 app.use(bodyParser.json());
